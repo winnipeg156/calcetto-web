@@ -1,2 +1,2 @@
 # calcetto-web
-Organize football games
+Organize football games.
