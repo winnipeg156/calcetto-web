@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta CHARSET="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td><a href="/">Home</a></td>
+        <td><a href="/admin">Pannello Admin</a></td>
+      </tr>
+    </table>
+    {% block body %}{% endblock %}
+  </body>
+</html>
