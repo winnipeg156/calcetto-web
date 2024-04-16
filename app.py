@@ -42,5 +42,30 @@ def admin():
     cur = con.cursor()
     res = cur.execute("SELECT name FROM players")
     current_players = cur.execute("SELECT name FROM current_players").fetchall()
+    players = cur.execute("SELECT name, value FROM players").fetchall()
     con.close()
-    return render_template("admin.html", current_players=current_players)
+    return render_template("admin.html", current_players=current_players, players= players)
+
+@app.route("/add_new_player", methods = ["POST"])
+def add_new_player():
+    new_player = request.form.get("new_player")
+    value = float(request.form.get("value"))
+    con = sqlite3.connect("players.db")
+    cur = con.cursor()
+    cur.execute("INSERT INTO players (name, value) VALUES (?, ?)", (new_player, value))
+    con.commit()
+    con.close()
+    return redirect("/admin")
+
+@app.route("/edit_value", methods = ["POST"])
+def edit_value():
+    player = request.form.get("player")
+    new_value = float(request.form.get("new_value"))
+    con = sqlite3.connect("players.db")
+    cur = con.cursor()
+    cur.execute("UPDATE players SET value = ? WHERE name = ?", (new_value, player))
+    con.commit()
+    con.close()
+    return redirect("/admin")
+
+    
