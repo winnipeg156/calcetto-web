@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <title>Pannello Admin</title>
+{% endblock %}
+
+{% block body %}
+  <h3>Partecipanti attuali</h3>
+  <table>
+    {% for player in registered_players %}
+      <tr>
+        <td>{{ player.player.name }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <form action="/clean_up" method="post">
+    {{ clean_up_form.csrf_token }}
+    <p>{{ clean_up_form.submit1 }}</p>
+  </form>
+  <h3>Giocatori nel DB</h3>
+  <table>
+    {% for player in players %}
+      <tr>
+        <td>{{ player.name }}</td>
+        <td>{{ player.value }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <form action="/admin" method="post">
+    {{ add_player_form.csrf_token }}
+    <p>
+      {{ add_player_form.name.label }}
+      <br>
+      {{ add_player_form.name }}
+    </p>
+    <p>
+      {{ add_player_form.value.label }}
+      <br>
+      {{ add_player_form.value }}
+    </p>
+    <p>
+      {{ add_player_form.submit2 }}
+    </p>
+  </form>
+  <form action ="/admin" method="post">
+    {{ edit_value_form.csrf_token }}
+    <p>
+      {{ edit_value_form.name.label }}
+      <br>
+      {{ edit_value_form.name }}
+    </p>
+    <p>
+      {{ edit_value_form.value.label }}
+      <br>
+      {{ edit_value_form.value }}
+    </p>
+    <p>
+      {{ edit_value_form.submit3 }}
+    </p>
+  </form>
+  <form action = "/teams" method="post">
+    {{ make_teams_form.csrf_token }}
+    <p>{{ make_teams_form.submit4 }}</p>
+{% endblock %}

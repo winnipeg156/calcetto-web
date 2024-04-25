@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <title>Partecipa</title>
+{% endblock %}
+
+{% block body %}
+<h1>Partecipa</h1>
+  <form action="/" method="post">
+    {{ form.csrf_token }}
+    <p>{{ form.name() }}</p>
+    <p>{{ form.submit() }}</p>
+  </form>
+  <h3>Partecipanti attuali</h3>
+  <table>
+    {% for player in registered_players %}
+      <tr>
+        <td>{{ player.player.name }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <h3>Squadre</h3>
+  <h4>Rossi</h4>
+    {% for player in red_players %}
+      {{ player.player.name }} {{player.player.value }}<br>
+    {% endfor %}
+  <h4>Gialli</h4>
+    {% for player in yellow_players %}
+      {{ player.player.name }} {{player.player.value }}<br>
+    {% endfor %}
+{% endblock %}
+
