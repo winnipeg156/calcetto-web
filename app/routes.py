@@ -12,7 +12,7 @@ def index():
     query = sa.select(Player)
     players = db.session.scalars(query)
     query = sa.select(RegisteredPlayer)
-    registered_players = db.session.scalars(query)
+    registered_players = db.session.scalars(query).all()
     query = sa.select(RedTeamPlayer)
     red_players = db.session.scalars(query).all()
     query = sa.select(YellowTeamPlayer)
@@ -22,7 +22,11 @@ def index():
     if form.validate_on_submit(): 
         for rp in registered_players:
             if form.name.data == rp.player.name:
-                return render_template("error.html")
+                flash("Giocatore già presente")
+                return redirect(url_for("index"))
+        if len(registered_players) >= 10:
+            flash("Massimo numero di partecipanti raggiunto")
+            return redirect(url_for("index"))
         query = sa.select(Player).where(Player.name == form.name.data)
         p = db.session.scalars(query).first()
         rp = RegisteredPlayer(player=p)
@@ -89,6 +93,9 @@ def teams():
             db.session.commit()
         query = sa.select(RegisteredPlayer)
         registered_players = db.session.scalars(query).all()
+        if len(registered_players) != 10:
+            flash("Non ci sono abbastanza partecipanti")
+            return redirect(url_for("admin")) 
         red_team, yellow_team, red_strength, yellow_strength, delta =\
                 make_teams(registered_players)
         for player in red_team:
