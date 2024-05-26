@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, PasswordField
 from wtforms.validators import DataRequired
 
 
@@ -23,5 +23,13 @@ class EditValueForm(FlaskForm):
     value = StringField("Valore", validators=[DataRequired()])
     submit3 = SubmitField("Modifica valore")
 
+
 class MakeTeamsForm(FlaskForm):
     submit4 = SubmitField("Fai le squadre")
+
+
+class LoginForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Accedi")
+
